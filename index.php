@@ -1,3 +1,9 @@
+<?php
+require_once './controller/controller.php';
+$control = new Controller();
+$listPais = $control->ListPais();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,6 +31,9 @@
 
     <!-- bootstrap cdn -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!--  ALERTAS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
 
 </head>
 
@@ -132,6 +141,7 @@
     <div class="container-fluid booking mt-5 pb-5">
         <div class="container pb-5">
             <div class="bg-light shadow" style="padding: 30px;">
+                <p class="text-primary">Pantalla 1</p>
                 <div class="row align-items-center" style="min-height: 60px;">
                     <div class="col-md-10">
                         <div class="row">
@@ -141,8 +151,9 @@
                                     <label for="" class="form-label">Selecciona Un Pais</label>
                                     <select class="custom-select px-4" id="Pais" onchange="SelectCiu()" style="height: 47px;">
                                         <option selected></option>
-                                        <option value="1">Inglaterra</option>
-
+                                        <?php foreach ($listPais as $lt) { ?>
+                                            <option value="<?= $lt['idPais'] ?>"><?= $lt['PaisNombre'] ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -150,7 +161,7 @@
                                 <div class="mb-6 mb-md-0">
                                     <!-- se implementa ciclo Dinamico -->
                                     <label for="" class="form-label">Selecciona Una Ciudad</label>
-                                    <select class="custom-select px-4" style="height: 47px;">
+                                    <select class="custom-select px-4" style="height: 47px;" id="Ciudad">
                                         <option selected></option>
                                     </select>
                                 </div>
@@ -160,7 +171,7 @@
                     </div>
                     <div class="col-md-2">
                         <label for="" class="form-label"></label>
-                        <button class="btn btn-primary btn-block" type="submit" style="height: 47px; margin-top: -2px;">Buscar</button>
+                        <button class="btn btn-primary btn-block" onclick="SearchInfo()" style="height: 47px; margin-top: -2px;">Buscar</button>
                     </div>
                 </div>
             </div>
@@ -168,9 +179,12 @@
     </div>
 
     <hr>
+
+    <div class="respond" style="margin-left: 3vh;margin-right:3vh;" id="respond"></div>
+
     <hr>
 
-    <div class="container-fluid pb-5">
+    <div class="container-fluid pb-5" style="margin-top: 20px;">
         <div class="container pb-5">
             <div class="row">
                 <div class="col-md-4">
@@ -217,42 +231,18 @@
                 <h1>Explora los mejores Destinos turisticos</h1>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="./asset/img/Pais/inglaterra.avif" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="">
-                            <h5 class="text-white">Inglaterra</h5>
-                            <span>2 Ciudades</span>
-                        </a>
+
+                <?php foreach ($listPais as $lt) { ?>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="destination-item position-relative overflow-hidden mb-2">
+                            <img class="img-fluid" src="./asset/img/Pais/<?= $lt['PaisFoto'] ?>" style="max-height: 200px;min-width:500px" alt="">
+                            <a class="destination-overlay text-white text-decoration-none" href="">
+                                <h5 class="text-white"><?= $lt['PaisNombre'] ?></h5>
+                                <span>2 Ciudades</span>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="./asset/img/Pais/Japon.jpg" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="">
-                            <h5 class="text-white">Japón</h5>
-                            <span>2 Ciudades</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="./asset/img/Pais/India.jpg" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="">
-                            <h5 class="text-white">India</h5>
-                            <span>2 Ciudades</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="./asset/img/Pais/Dinamarca.jpg" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="">
-                            <h5 class="text-white">Dinamarca</h5>
-                            <span>2 Ciudades</span>
-                        </a>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -340,6 +330,9 @@
     <script src="./asset/lib/tempusdominus/js/moment.min.js"></script>
     <script src="./asset/lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="./asset/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
+
     <!-- archivos Js -->
     <script src="./asset/mail/jqBootstrapValidation.min.js"></script>
     <script src="./asset/mail/contact.js"></script>
