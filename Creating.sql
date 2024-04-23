@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `Ciudad` (
   `CiuNombre` VARCHAR(45) NOT NULL,
   `CiuCoord` VARCHAR(45) NOT NULL,
   `CiuFoto` VARCHAR(100) NOT NULL,
-
+  `CiudDes` TEXT NOT NULL,
   PRIMARY KEY (`idCiudad`), -- Include idCiudad in the primary key
   INDEX `fk_Ciudad_Pais1_idx` (`Pais_idPais`),
   CONSTRAINT `fk_Ciudad_Pais1`

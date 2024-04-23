@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Agencia- Prueba Tecnica</title>
+    <title>Agencia- Proyecto</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <!-- Favicon -->
@@ -22,7 +22,6 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="./asset/css/style.css" rel="stylesheet">
-
 
     <!-- bootstrap cdn -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -65,7 +64,7 @@
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav ml-auto py-0">
                         <a href="" class="nav-item nav-link active">Inicio</a>
-                        <p style="cursor: auto;" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#InisiarSession">Iniciar Sesion</p>
+                        <p style="cursor: pointer;" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#IniciarSession">Iniciar Sesión</p>
                     </div>
                 </div>
             </nav>
@@ -73,18 +72,24 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="InisiarSession" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="IniciarSession" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Inicia Sesión</h1>
                 </div>
                 <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <div class="mb-3">
+                        <label for="User" class="form-label">Usuario</label>
+                        <input type="text" class="form-control" id="User">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pass" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="pass">
+                    </div>
+                    <center>
+                        <button class="btn btn-primary">Iniciar Sesión</button>
+                    </center>
                 </div>
             </div>
         </div>
@@ -134,7 +139,7 @@
                                 <div class="mb-6 mb-md-0">
                                     <!-- se implementa ciclo -->
                                     <label for="" class="form-label">Selecciona Un Pais</label>
-                                    <select class="custom-select px-4" style="height: 47px;">
+                                    <select class="custom-select px-4" id="Pais" onchange="SelectCiu()" style="height: 47px;">
                                         <option selected></option>
                                         <option value="1">Inglaterra</option>
 
@@ -155,7 +160,7 @@
                     </div>
                     <div class="col-md-2">
                         <label for="" class="form-label"></label>
-                        <button class="btn btn-primary btn-block" type="submit" style="height: 47px; margin-top: -2px;">Submit</button>
+                        <button class="btn btn-primary btn-block" type="submit" style="height: 47px; margin-top: -2px;">Buscar</button>
                     </div>
                 </div>
             </div>
@@ -214,7 +219,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="./asset/img/destination-1.jpg" alt="">
+                        <img class="img-fluid" src="./asset/img/Pais/inglaterra.avif" alt="">
                         <a class="destination-overlay text-white text-decoration-none" href="">
                             <h5 class="text-white">Inglaterra</h5>
                             <span>2 Ciudades</span>
@@ -223,7 +228,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="./asset/img/destination-2.jpg" alt="">
+                        <img class="img-fluid" src="./asset/img/Pais/Japon.jpg" alt="">
                         <a class="destination-overlay text-white text-decoration-none" href="">
                             <h5 class="text-white">Japón</h5>
                             <span>2 Ciudades</span>
@@ -232,7 +237,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="./asset/img/destination-3.jpg" alt="">
+                        <img class="img-fluid" src="./asset/img/Pais/India.jpg" alt="">
                         <a class="destination-overlay text-white text-decoration-none" href="">
                             <h5 class="text-white">India</h5>
                             <span>2 Ciudades</span>
@@ -241,7 +246,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="./asset/img/destination-4.jpg" alt="">
+                        <img class="img-fluid" src="./asset/img/Pais/Dinamarca.jpg" alt="">
                         <a class="destination-overlay text-white text-decoration-none" href="">
                             <h5 class="text-white">Dinamarca</h5>
                             <span>2 Ciudades</span>
@@ -257,41 +262,40 @@
             <div class="row align-items-center">
                 <div class="col-lg-7 mb-5 mb-lg-0">
                     <div class="mb-4">
-                        <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Mega Offer</h6>
-                        <h1 class="text-white"><span class="text-primary">30% OFF</span> For Honeymoon</h1>
+                        <h1 class="text-white"> Registrate a nuestra Plataforma</h1>
                     </div>
-                    <p class="text-white">Invidunt lorem justo sanctus clita. Erat lorem labore ea, justo dolor lorem ipsum ut sed eos,
-                        ipsum et dolor kasd sit ea justo. Erat justo sed sed diam. Ea et erat ut sed diam sea ipsum est
-                        dolor</p>
-                    <ul class="list-inline text-white m-0">
-                        <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Labore eos amet dolor amet diam</li>
-                        <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Etsea et sit dolor amet ipsum</li>
-                        <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Diam dolor diam elitripsum vero.</li>
-                    </ul>
+                    <p class="text-white">¡No dejes pasar esta oportunidad única! Regístrate ahora y disfruta de un mundo de beneficios exclusivos. En nuestra plataforma, encontrarás todo lo que necesitas para llevar tu experiencia al siguiente nivel. Descubre productos de calidad, servicios excepcionales y promociones especiales que te ayudarán a alcanzar tus metas. Únete a nuestra comunidad hoy mismo y sé parte de algo extraordinario.</p>
+
                 </div>
                 <div class="col-lg-5">
                     <div class="card border-0">
                         <div class="card-header bg-primary text-center p-4">
-                            <h1 class="text-white m-0">Sign Up Now</h1>
+                            <h1 class="text-white m-0">Registrate </h1>
                         </div>
                         <div class="card-body rounded-bottom bg-white p-5">
                             <form>
                                 <div class="form-group">
-                                    <input type="text" class="form-control p-4" placeholder="Your name" required="required" />
+                                    <input type="text" class="form-control p-4" placeholder="Nombres" required="required" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control p-4" placeholder="Your email" required="required" />
+                                    <input type="text" class="form-control p-4" placeholder="Apellidos" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control p-4" placeholder="Usuario" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control p-4" placeholder="Contraseña" required="required" />
                                 </div>
                                 <div class="form-group">
                                     <select class="custom-select px-4" style="height: 47px;">
-                                        <option selected>Select a destination</option>
-                                        <option value="1">destination 1</option>
-                                        <option value="2">destination 1</option>
-                                        <option value="3">destination 1</option>
+                                        <option selected>Sexo</option>
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Femenino </option>
+                                        <option value="I">Prefiero no Indicar</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <button class="btn btn-primary btn-block py-3" type="submit">Sign Up Now</button>
+                                    <button class="btn btn-primary btn-block py-3" type="submit">Registrarse</button>
                                 </div>
                             </form>
                         </div>
@@ -315,11 +319,11 @@
     <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5" style="border-color: rgba(256, 256, 256, .1) !important;">
         <div class="row">
             <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
-                <p class="m-0 text-white-50">Copyright &copy; <a href="www.linkedin.com/in/diego-arenas06" target="_blank">Diego Arenas </a>. Derechos reservados.</a>
+                <p class="m-0 text-white-50">Copyright &copy; <a href="https://www.linkedin.com/in/diego-arenas06" target="_blank">Diego Arenas </a>. Derechos reservados.</a>
                 </p>
             </div>
             <div class="col-lg-6 text-center text-md-right">
-                <p class="m-0 text-white-50">Diseñado por <a href="www.linkedin.com/in/diego-arenas06" target="_blank">aarenas_06</a>
+                <p class="m-0 text-white-50">Diseñado por <a href="https://www.linkedin.com/in/diego-arenas06" target="_blank">aarenas_06</a>
                 </p>
             </div>
         </div>
@@ -329,7 +333,7 @@
 
 
     <!-- JavaScript Librerias -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="./asset/lib/easing/easing.min.js"></script>
     <script src="./asset/lib/owlcarousel/owl.carousel.min.js"></script>
@@ -341,6 +345,8 @@
     <script src="./asset/mail/contact.js"></script>
 
     <script src="./asset/js/main.js"></script>
+    <script src="script.js"></script>
+
 </body>
 
 </html>
