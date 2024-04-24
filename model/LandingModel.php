@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/AgenciaInfo/includes/conexion.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Agencia/includes/conexion.php';
 
 class modelo
 {
@@ -11,7 +11,9 @@ class modelo
     }
     public function ListPais()
     {
-        $sql = "SELECT * FROM `pais`";
+        $sql = "SELECT tb1.idPais,tb1.PaisNombre ,tb1.PaisFoto ,COUNT(tb2.idCiudad) Conteo FROM pais tb1 
+LEFT JOIN ciudad tb2 on tb2.Pais_idPais=tb1.idPais
+GROUP BY tb1.idPais,tb1.PaisNombre ,tb1.PaisFoto";
         $sql = $this->CNX1->prepare($sql);
         $sql->execute();
         $row = $sql->fetchAll(PDO::FETCH_NAMED);
@@ -35,7 +37,10 @@ class modelo
     }
     public function InfoDetalle($idCiudad)
     {
-        $sql = "";
+        $sql = "SELECT tb1.idCiudad,tb1.CiuNombre,tb1.CiuCoord,tb1.CiuFoto,tb2.* 
+        FROM ciudad tb1 
+        INNER JOIN pais tb2 on tb2.idPais=tb1.Pais_idPais 
+        WHERE idCiudad=$idCiudad";
         $sql = $this->CNX1->prepare($sql);
         $sql->execute();
         $row = $sql->fetch(PDO::FETCH_NAMED);

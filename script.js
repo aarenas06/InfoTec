@@ -10,7 +10,7 @@ async function SelectCiu() {
   formData.append("Pais", Pais);
 
   try {
-    let req2 = await fetch("controller/controller.php", {
+    let req2 = await fetch("controller/LandingController.php", {
       method: "POST",
       body: formData,
     });
@@ -26,7 +26,10 @@ async function SelectCiu() {
       });
     }
   } catch (error) {
-    console.error(error);
+    Swal.fire({
+      icon: "error",
+      text: "Error en el sistema",
+    });
   }
 }
 async function SearchInfo() {
@@ -45,7 +48,7 @@ async function SearchInfo() {
   formData.append("Pais", Pais);
   formData.append("Ciudad", Ciudad);
   try {
-    let req2 = await fetch("controller/controller.php", {
+    let req2 = await fetch("controller/LandingController.php", {
       method: "POST",
       body: formData,
     });
@@ -54,7 +57,10 @@ async function SearchInfo() {
       $("#respond").html(res2);
     }
   } catch (error) {
-    console.error(error);
+    Swal.fire({
+      icon: "error",
+      text: "Error en el sistema",
+    });
   }
 }
 function formatoConComas(input) {
@@ -86,12 +92,15 @@ async function InfoDetalle(idCiudad) {
     return;
   }
 
+  var PresupuestoNumerico = Presupuesto.replace(/,/g, "");
+  PresupuestoNumerico = parseFloat(PresupuestoNumerico);
+
   let formData = new FormData();
   formData.append("funcion", "InfoDetalle");
-  formData.append("Presupuesto", Presupuesto);
+  formData.append("Presupuesto", PresupuestoNumerico);
   formData.append("idCiudad", idCiudad);
   try {
-    let req2 = await fetch("controller/controller.php", {
+    let req2 = await fetch("controller/LandingController.php", {
       method: "POST",
       body: formData,
     });
@@ -100,6 +109,117 @@ async function InfoDetalle(idCiudad) {
       $("#respond").html(res2);
     }
   } catch (error) {
-    console.error(error);
+    Swal.fire({
+      icon: "error",
+      text: "Error en el sistema",
+    });
+  }
+}
+async function NewRegistro() {
+  var Nombres = $("#Nombres").val();
+  var Apellidos = $("#Apellidos").val();
+  var Usuario = $("#Usuario").val();
+  var Contrasena = $("#Contrasena").val();
+  var Sexo = $("#Sexo").val();
+  var Telefono = $("#Telefono").val();
+  if (
+    Nombres === "" ||
+    Apellidos === "" ||
+    Usuario === "" ||
+    Contrasena === "" ||
+    Sexo === "" ||
+    Telefono === ""
+  ) {
+    Swal.fire({
+      icon: "info",
+      text: "Todos los campos son obligatorios",
+    });
+    return;
+  }
+  let formData = new FormData();
+  formData.append("funcion", "NewRegistro");
+  formData.append("Nombres", Nombres);
+  formData.append("Apellidos", Apellidos);
+  formData.append("Usuario", Usuario);
+  formData.append("Contrasena", Contrasena);
+  formData.append("Sexo", Sexo);
+  formData.append("Telefono", Telefono);
+  try {
+    let req2 = await fetch("controller/InicioController.php", {
+      method: "POST",
+      body: formData,
+    });
+    let res2 = await req2.json();
+    if (res2) {
+      if (res2.cod === 1) {
+        Swal.fire({
+          icon: "success",
+          text: "Usuario registrado exitosamente",
+        });
+        LimpiarCampos();
+      } else {
+        Swal.fire({
+          icon: "info",
+          text: "Usuario ya existente",
+        });
+      }
+    }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      text: "Error en el sistema",
+    });
+  }
+}
+function LimpiarCampos() {
+  $("#Nombres").val("");
+  $("#Apellidos").val("");
+  $("#Usuario").val("");
+  $("#Contrasena").val("");
+  $("#Sexo").val("");
+  $("#Telefono").val("");
+}
+async function iniciarSesion() {
+  var User = $("#User").val();
+  var Pass = $("#Pass").val();
+
+  if (User === "" || Pass === "") {
+    Swal.fire({
+      icon: "info",
+      text: "Todos los campos son obligatorios",
+    });
+    return;
+  }
+  let formData = new FormData();
+  formData.append("funcion", "iniciarSesion");
+  formData.append("User", User);
+  formData.append("Pass", Pass);
+  try {
+    let req2 = await fetch("controller/InicioController.php", {
+      method: "POST",
+      body: formData,
+    });
+    let res2 = await req2.json();
+    if (res2) {
+      if (res2.cod === 1) {
+        Swal.fire({
+          icon: "success",
+          text: "Bienvenido " + res2.User,
+        });
+        setTimeout(function () {
+          location.reload();
+        }, 3000);
+      } else {
+        Swal.fire({
+          icon: "error",
+          text: "Credenciales Incorrectas",
+        });
+      }
+    }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      text: "Error en el sistema",
+    });
   }
 }

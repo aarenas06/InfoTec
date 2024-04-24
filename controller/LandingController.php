@@ -1,8 +1,8 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/AgenciaInfo/model/model.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Agencia/model/LandingModel.php';
 
 
-class Controller
+class LandingController
 {
     public $MODEL;
 
@@ -29,18 +29,22 @@ class Controller
         $data = $this->MODEL->GetInfoCiudad($idCiudad);
 
         if ($data) {
-            include $_SERVER['DOCUMENT_ROOT'] . '/AgenciaInfo/layouts/pantalla2.php';
+            include $_SERVER['DOCUMENT_ROOT'] . '/Agencia/views/pantalla2.php';
         }
     }
     public function InfoDetalle()
     {
-        $idCiudad = $_POST['Ciudad'];
+        $idCiudad = $_POST['idCiudad'];
+        $presupuesto = $_POST['Presupuesto'];
         $data = $this->MODEL->InfoDetalle($idCiudad);
+        if ($data) {
+            include $_SERVER['DOCUMENT_ROOT'] . '/Agencia/views/pantalla3.php';
+        }
     }
 }
 // Crear instancia del controlnor
-$controller = new Controller();
+$controller = new LandingController();
 
 if (isset($_POST['funcion'])) {
-    call_user_func(array(new Controller, $_POST['funcion']));
+    call_user_func(array(new LandingController, $_POST['funcion']));
 }

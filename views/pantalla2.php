@@ -14,7 +14,7 @@
     <div class="col-lg-4">
         <div class="container">
             <center>
-                <img class="img-fluid" style="max-height: 400px;" src="/AgenciaInfo/asset/img/Ciudad/Delhi.png" alt="">
+                <img class="img-fluid" style="max-height: 400px;" src="/Agencia/asset/img/Ciudad/Delhi.png" alt="">
             </center>
         </div>
     </div>
@@ -33,7 +33,7 @@
         </center>
         <br><br>
         <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">$</span>
+            <span class="input-group-text" id="basic-addon1">COP $</span>
             <input type="tel" class="form-control" oninput="formatoConComas(this)" id="Presupuesto">
         </div>
         <center>

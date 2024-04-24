@@ -1,7 +1,17 @@
 <?php
-require_once './controller/controller.php';
-$control = new Controller();
-$listPais = $control->ListPais();
+// Verifica si las variables de sesión no existen
+session_start();
+require_once './controller/LandingController.php';
+
+$controlLand = new LandingController();
+
+$listPais = $controlLand->ListPais();
+if (!isset($_SESSION["idUsuarios"])) {
+    $Sesion = 0;
+} else {
+    $Sesion = 1;
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -35,6 +45,13 @@ $listPais = $control->ListPais();
     <!--  ALERTAS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
 
+    <!-- icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css" integrity="sha512-9YHSK59/rjvhtDcY/b+4rdnl0V4LPDWdkKceBl8ZLF5TB6745ml1AfluEU6dFWqwDw9lPvnauxFgpKvJqp7jiQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 </head>
 
 <body>
@@ -43,9 +60,11 @@ $listPais = $control->ListPais();
             <div class="row">
                 <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
                     <div class="d-inline-flex align-items-center">
-                        <p><i class="fa fa-envelope mr-2"></i>diegoaarenas06@gmail.com</p>
+                        <?php if ($Sesion == 1) { ?>
+                            <p class="text-primary"><i class="fa-solid fa-user"></i> <?= $_SESSION["UsuNombres"] ?></p>
+                        <?php } ?>
                         <p class="text-body px-3">|</p>
-                        <p><i class="fa fa-phone-alt mr-2"></i>+57 3054648486</p>
+                        <p><i class="fa-solid fa-code"></i>Dev:aarenas06</p>
                     </div>
                 </div>
                 <div class="col-lg-6 text-center text-lg-right">
@@ -72,8 +91,20 @@ $listPais = $control->ListPais();
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="" class="nav-item nav-link active">Inicio</a>
-                        <p style="cursor: pointer;" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#IniciarSession">Iniciar Sesión</p>
+                        <a href="" class="nav-item nav-link active" style="margin-top: 2px;">Inicio</a>
+                        <?php if ($Sesion == 0) { ?>
+                            <p style="cursor: pointer;" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#IniciarSession">Iniciar Sesión</p>
+                        <?php } else { ?>
+                            <div class="dropdown nav-item nav-link">
+                                <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-user"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                    <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                                </ul>
+                            </div>
+                        <?php  } ?>
                     </div>
                 </div>
             </nav>
@@ -93,11 +124,11 @@ $listPais = $control->ListPais();
                         <input type="text" class="form-control" id="User">
                     </div>
                     <div class="mb-3">
-                        <label for="pass" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="pass">
+                        <label for="Pass" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="Pass">
                     </div>
                     <center>
-                        <button class="btn btn-primary">Iniciar Sesión</button>
+                        <button class="btn btn-primary" onclick="iniciarSesion()">Iniciar Sesión</button>
                     </center>
                 </div>
             </div>
@@ -141,7 +172,7 @@ $listPais = $control->ListPais();
     <div class="container-fluid booking mt-5 pb-5">
         <div class="container pb-5">
             <div class="bg-light shadow" style="padding: 30px;">
-                <p class="text-primary">Pantalla 1</p>
+                <h5 class="text-primary">Pantalla 1</h5>
                 <div class="row align-items-center" style="min-height: 60px;">
                     <div class="col-md-10">
                         <div class="row">
@@ -180,11 +211,11 @@ $listPais = $control->ListPais();
 
     <hr>
 
-    <div class="respond" style="margin-left: 3vh;margin-right:3vh;" id="respond"></div>
+    <div class="respond" style="margin:3vh;" id="respond"></div>
 
     <hr>
 
-    <div class="container-fluid pb-5" style="margin-top: 20px;">
+    <div class="container-fluid pb-5" style="margin-top: 40px;">
         <div class="container pb-5">
             <div class="row">
                 <div class="col-md-4">
@@ -238,7 +269,7 @@ $listPais = $control->ListPais();
                             <img class="img-fluid" src="./asset/img/Pais/<?= $lt['PaisFoto'] ?>" style="max-height: 200px;min-width:500px" alt="">
                             <a class="destination-overlay text-white text-decoration-none" href="">
                                 <h5 class="text-white"><?= $lt['PaisNombre'] ?></h5>
-                                <span>2 Ciudades</span>
+                                <span><?= $lt['Conteo'] ?> Ciudades</span>
                             </a>
                         </div>
                     </div>
@@ -260,34 +291,45 @@ $listPais = $control->ListPais();
                 <div class="col-lg-5">
                     <div class="card border-0">
                         <div class="card-header bg-primary text-center p-4">
-                            <h1 class="text-white m-0">Registrate </h1>
+                            <?php if ($Sesion == 0) { ?>
+                                <h1 class="text-white m-0">Registrate </h1>
+                            <?php } ?>
                         </div>
                         <div class="card-body rounded-bottom bg-white p-5">
-                            <form>
+                            <?php if ($Sesion == 0) { ?>
                                 <div class="form-group">
-                                    <input type="text" class="form-control p-4" placeholder="Nombres" required="required" />
+                                    <input type="text" class="form-control p-4" placeholder="Nombres" id="Nombres" required="required" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control p-4" placeholder="Apellidos" required="required" />
+                                    <input type="text" class="form-control p-4" placeholder="Apellidos" id="Apellidos" required="required" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control p-4" placeholder="Usuario" required="required" />
+                                    <input type="text" class="form-control p-4" placeholder="Usuario" id="Usuario" required="required" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control p-4" placeholder="Contraseña" required="required" />
+                                    <input type="password" class="form-control p-4" placeholder="Contraseña" id="Contrasena" required="required" />
                                 </div>
                                 <div class="form-group">
-                                    <select class="custom-select px-4" style="height: 47px;">
+                                    <select class="custom-select px-4" style="height: 47px;" id="Sexo">
                                         <option selected>Sexo</option>
                                         <option value="M">Masculino</option>
                                         <option value="F">Femenino </option>
                                         <option value="I">Prefiero no Indicar</option>
                                     </select>
                                 </div>
-                                <div>
-                                    <button class="btn btn-primary btn-block py-3" type="submit">Registrarse</button>
+                                <div class="form-group">
+                                    <input type="number" class="form-control p-4" placeholder="Telefono" id="Telefono" required="required" />
                                 </div>
-                            </form>
+                                <div>
+                                    <button class="btn btn-primary btn-block py-3" onclick="NewRegistro()">Registrarse</button>
+                                </div>
+                            <?php } else { ?>
+                                <center>
+                                    <img src="./asset/img/logo.jpeg" class="img-fluid">
+                                </center>
+                            <?php  } ?>
+
+
                         </div>
                     </div>
                 </div>
