@@ -52,6 +52,8 @@ class InicioController
             $_SESSION['UsuNombres'] = $validateUser['UsuNombres'];
             $_SESSION['UsuApellidos'] = $validateUser['UsuApellidos'];
             $_SESSION['UsuUser'] = $validateUser['UsuUser'];
+
+            $LastSession = $this->MODEL->LastSession($validateUser['idUsuarios']);
             $responde = array(
                 "cod" => 1,
                 "Mensaje" => 'Creedenciales Validas',

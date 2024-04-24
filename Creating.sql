@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `Usuarios` (
   `UsuApellidos` VARCHAR(100) NOT NULL,
   `UsuSexo` VARCHAR(1) NOT NULL,
   `UsuUser` VARCHAR(20) NOT NULL,
-  `UsuPass` VARCHAR(20) NOT NULL,
+  `UsuPass` VARCHAR(100) NOT NULL,
   `UsuTelefono` INT NOT NULL,
   `UsuLastSession` DATETIME NOT NULL,
   PRIMARY KEY (`idUsuarios`, `Roles_idRoles`),

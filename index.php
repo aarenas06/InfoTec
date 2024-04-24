@@ -8,8 +8,11 @@ $controlLand = new LandingController();
 $listPais = $controlLand->ListPais();
 if (!isset($_SESSION["idUsuarios"])) {
     $Sesion = 0;
+    $userse = '';
 } else {
     $Sesion = 1;
+
+    $userse = $_SESSION["idUsuarios"];
 }
 
 
@@ -363,6 +366,7 @@ if (!isset($_SESSION["idUsuarios"])) {
 
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
+    <input type="hidden" id="userse" value="<?= $userse ?>">
 
     <!-- JavaScript Librerias -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

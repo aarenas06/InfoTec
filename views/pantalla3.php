@@ -3,19 +3,22 @@
 
 <div class="row">
     <div class="col-lg-4">
-        <div class="card" style="border-radius:25px;min-height:300px; margin: top 10px;">
+        <div class="card" style="border-radius:25px;min-height:370px; margin: top 10px;">
             <div class="card-body">
                 <center>
                     <h4>Datos Generales</h4>
                 </center>
                 <h5>Pais: <?= $data['PaisNombre'] ?></h5>
                 <h5>Ciudad: <?= $data['CiuNombre'] ?></h5>
+                <h5>Moneda Local: <?= $data['PaisCodMon'] ?></h5>
+                <h5>Moneda Simbolo: <?= $data['PaisSimMon'] ?></h5>
+                <hr>
                 <h5>Presupuesto COP: $<?= number_format($presupuesto, 00) ?></h5>
             </div>
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="card" style="border-radius:25px;min-height:300px; margin: top 10px;">
+        <div class="card" style="border-radius:25px;min-height:370px; margin: top 10px;">
             <div class="card-body">
                 <center>
                     <h4>Clima</h4>
@@ -35,27 +38,90 @@
                         </linearGradient>
                         <path fill="url(#PtY0UrX1qJDQb5CcMCRpOb_qA3w9Yp2vY7r_gr2)" d="M39.5,24c-0.245,0-0.484,0.022-0.721,0.053C37.518,22.21,35.401,21,33,21	c-3.178,0-5.858,2.12-6.712,5.021C23.904,26.134,22,28.087,22,30.5c0,2.485,2.015,4.5,4.5,4.5c1.085,0,11.875,0,13,0	c3.038,0,5.5-2.462,5.5-5.5C45,26.462,42.538,24,39.5,24z"></path>
                     </svg>
-                    <h4>23° C
+                    <h5>
+                        Coordenadas <br>
+                        <b><input type="text" style="width: 50%;" class="form-control form-control-sm" id="CoordenadaCiu" value="<?= $data['CiuCoord'] ?>" readonly></b>
+                    </h5>
+                    <h5>
+                        El clima de hoy <?php print_r(date('d-m-Y')); ?> es : <br>
+                        <span id="Temp"></span>
                         <br>
-                        <?php print_r(date('d-m-Y')); ?>
-                    </h4>
+                        <span id="DescTem"></span>
+                    </h5>
                 </center>
             </div>
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="card" style="border-radius:25px;min-height:300px;  margin: top 10px;">
+        <div class="card" style="border-radius:25px;min-height:370px;  margin: top 10px;">
             <div class="card-body">
                 <center>
                     <h4>Divisas</h4>
                     <img src="/Agencia/asset/img/coin.svg" class="img-fluid" width="150" height="150">
+                    <br>
+                    <h5>Moneda Local: <span id="MonLocal"><?= $data['PaisCodMon'] ?></span></h5>
+                    <input type="hidden" id="PresuCOP" value="<?= $presupuesto ?>">
                     <h5>
-                        1 COP = 3000 US <br>
-                        50.000 = 90000 US
+                        1 COP = <span id="MonEqu"></span> <?= $data['PaisCodMon'] ?> <br>
+                        $ <?= number_format($presupuesto, 00) ?> COP = <?= $data['PaisSimMon'] ?> <span id="ValorNuevo"></span> <?= $data['PaisCodMon'] ?>
                     </h5>
                 </center>
             </div>
         </div>
-
     </div>
+
+    <?php if ($Session == 1) { ?>
+        <center>
+            <button class="btn btn-primary btn-sm">Guardar Presupuesto <i class="fa-solid fa-floppy-disk"></i></button>
+        </center>
+    <?php } else { ?>
+        <div class="container">
+            <h6 class="text-center" style="margin-top: 4vh;"><span style="color: red;">NOTA:</span>Si deseas Guardar este presupuesto para compartirlos con otra personas tienes que inciar sessión</h6>
+        </div>
+    <?php  } ?>
+
 </div>
+<script>
+    CoordenadaCiu();
+    async function CoordenadaCiu() {
+        var Coor = $("#CoordenadaCiu").val();
+        var url = "http://api.weatherunlocked.com/api/current/" + Coor + "?app_id=2a14523c&app_key=b5f0101353deff3514036987309331b3";
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                var temp = data.temp_c;
+                var des = data.wx_desc;
+
+                $("#Temp").html(temp + "°C");
+                $("#DescTem").html(des);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+    CambioDivisas();
+    async function CambioDivisas() {
+        var COD = $("#MonLocal").html();
+        var url = "https://v6.exchangerate-api.com/v6/196aac1ec9bde08a039ab6cb/latest/COP";
+        var Presu = $("#PresuCOP").val();
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                var Valor = data.conversion_rates[COD]; // Acceder a la propiedad usando la variable COD como clave
+                $("#MonEqu").html(Valor);
+                var Tasa = Valor * Presu;
+                var TasaConComa = Tasa.toLocaleString(); // Formatear Tasa con comas de los miles
+                $("#ValorNuevo").html(TasaConComa);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+</script>

@@ -37,6 +37,12 @@ class LandingController
         $idCiudad = $_POST['idCiudad'];
         $presupuesto = $_POST['Presupuesto'];
         $data = $this->MODEL->InfoDetalle($idCiudad);
+        $userse = $_POST['userse'];
+        if ($userse) {
+            $Session = 1;
+        } else {
+            $Session = 0;
+        }
         if ($data) {
             include $_SERVER['DOCUMENT_ROOT'] . '/Agencia/views/pantalla3.php';
         }

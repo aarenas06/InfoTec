@@ -84,6 +84,8 @@ function formatoConComas(input) {
 }
 async function InfoDetalle(idCiudad) {
   var Presupuesto = $("#Presupuesto").val();
+  var userse = $("#userse").val();
+
   if (Presupuesto === "") {
     Swal.fire({
       icon: "info",
@@ -99,6 +101,7 @@ async function InfoDetalle(idCiudad) {
   formData.append("funcion", "InfoDetalle");
   formData.append("Presupuesto", PresupuestoNumerico);
   formData.append("idCiudad", idCiudad);
+  formData.append("userse", userse);
   try {
     let req2 = await fetch("controller/LandingController.php", {
       method: "POST",
@@ -208,7 +211,7 @@ async function iniciarSesion() {
         });
         setTimeout(function () {
           location.reload();
-        }, 3000);
+        }, 2000);
       } else {
         Swal.fire({
           icon: "error",
