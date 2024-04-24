@@ -84,14 +84,15 @@ CREATE TABLE IF NOT EXISTS `Ciudad` (
 
 -- Table: presupuesto
 CREATE TABLE IF NOT EXISTS `presupuesto` (
-  `idPresupuesto` INT NOT NULL,
+  `idPresupuesto` INT NOT NULL AUTO_INCREMENT,
   `Usuarios_idUsuarios` INT NOT NULL,
   `Ciudad_idCiudad` INT NOT NULL,
   `PreValorLocal` FLOAT NOT NULL,
   `PreValorPaisSelect` FLOAT NOT NULL,
   `PreValorAlem` FLOAT NOT NULL,
   `PreEstado` INT NOT NULL DEFAULT 0 COMMENT '0: Private, 1: Public',
-  PRIMARY KEY (`idPresupuesto`, `Usuarios_idUsuarios`, `Ciudad_idCiudad`),
+  -- PRIMARY KEY (`idPresupuesto`, `Usuarios_idUsuarios`, `Ciudad_idCiudad`),
+  PRIMARY KEY (`idPresupuesto`),
   INDEX `fk_Usuarios_has_Ciudad_Ciudad1_idx` (`Ciudad_idCiudad`),
   INDEX `fk_Usuarios_has_Ciudad_Usuarios1_idx` (`Usuarios_idUsuarios`),
   CONSTRAINT `fk_Usuarios_has_Ciudad_Usuarios1`

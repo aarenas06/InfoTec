@@ -60,4 +60,21 @@ class modelo
             echo "Error: " . $e->getMessage();
         }
     }
+    public function SavePresupuesto($data)
+    {
+        try {
+
+            $columnas = implode(", ", array_keys($data));
+            $valores = array_values($data);
+            $placeholders = implode(", ", array_fill(0, count($valores), "?"));
+            $sql1 = "INSERT INTO presupuesto ($columnas) VALUES ($placeholders)";
+            $stmt = $this->CNX1->prepare($sql1);
+            $stmt->execute($valores);
+            $this->BD->inserRegistro($sql1);
+            return 1;
+        } catch (PDOException $e) {
+            die("Error al insertar los datos: " . $e->getMessage());
+            return 0;
+        }
+    }
 }

@@ -67,6 +67,55 @@ class InicioController
         }
         echo json_encode($responde);
     }
+    public function SavePresupuesto()
+    {
+        $EUR = $this->consumo();
+        $valorReal = $EUR * $_POST['PresuCOP'];
+        $data = array(
+            "Ciudad_idCiudad" => $_POST['idCiudad'],
+            "PreValorLocal" => $_POST['PresuCOP'],
+            "PreValorPaisSelect" => $_POST['ValorLocal'],
+            "Usuarios_idUsuarios" => $_POST['userse'],
+            "PreValorAlem" => number_format($valorReal, 2),
+            "PreEstado" => 0,
+        );
+        $insert = $this->MODEL->SavePresupuesto($data);
+        $responde = array(
+            "cod" => $insert,
+            "Mensaje" => 'Presupuesto Guardado',
+        );
+        echo json_encode($responde);
+    }
+    private function consumo()
+    {
+        // URL de la API de tasas de cambio
+        $url = "https://v6.exchangerate-api.com/v6/196aac1ec9bde08a039ab6cb/latest/COP";
+        // Inicializar cURL
+        $curl = curl_init($url);
+        // Establecer opciones para la solicitud cURL
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        // Ejecutar la solicitud cURL
+        $response = curl_exec($curl);
+        // Verificar si la solicitud fue exitosa
+        if ($response === false) {
+            // Si la solicitud falla, mostrar el mensaje de error
+            echo "Error en la solicitud cURL: " . curl_error($curl);
+        } else {
+            // Decodificar la respuesta JSON
+            $data = json_decode($response, true);
+            // Verificar si se pudo decodificar correctamente la respuesta JSON
+            if ($data === null) {
+                // Si la decodificación falla, mostrar el mensaje de error
+                return "Error al decodificar la respuesta JSON";
+            } else {
+                // Obtener el valor de conversión de COP a EUR
+                $valor_eur = $data['conversion_rates']['EUR'];
+                return $valor_eur;
+            }
+        }
+
+        curl_close($curl);
+    }
 }
 // Crear instancia del controlnor
 $controller = new InicioController();

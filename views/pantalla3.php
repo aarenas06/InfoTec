@@ -61,6 +61,7 @@
                     <br>
                     <h5>Moneda Local: <span id="MonLocal"><?= $data['PaisCodMon'] ?></span></h5>
                     <input type="hidden" id="PresuCOP" value="<?= $presupuesto ?>">
+
                     <h5>
                         1 COP = <span id="MonEqu"></span> <?= $data['PaisCodMon'] ?> <br>
                         $ <?= number_format($presupuesto, 00) ?> COP = <?= $data['PaisSimMon'] ?> <span id="ValorNuevo"></span> <?= $data['PaisCodMon'] ?>
@@ -69,18 +70,16 @@
             </div>
         </div>
     </div>
-
-    <?php if ($Session == 1) { ?>
-        <center>
-            <button class="btn btn-primary btn-sm">Guardar Presupuesto <i class="fa-solid fa-floppy-disk"></i></button>
-        </center>
-    <?php } else { ?>
-        <div class="container">
-            <h6 class="text-center" style="margin-top: 4vh;"><span style="color: red;">NOTA:</span>Si deseas Guardar este presupuesto para compartirlos con otra personas tienes que inciar sessión</h6>
-        </div>
-    <?php  } ?>
-
 </div>
+<?php if ($Session == 1) { ?>
+    <center>
+        <button class="btn btn-primary btn-sm" style="margin-top: 3vh;" onclick="SavePresupuesto(<?= $data['idCiudad'] ?>)">Guardar Presupuesto <i class="fa-solid fa-floppy-disk"></i></button>
+    </center>
+<?php } else { ?>
+    <div class="container">
+        <h6 class="text-center" style="margin-top: 4vh;"><span style="color: red;">NOTA:</span>Si deseas Guardar este presupuesto para compartirlos con otra personas tienes que inciar sessión</h6>
+    </div>
+<?php  } ?>
 <script>
     CoordenadaCiu();
     async function CoordenadaCiu() {
@@ -124,4 +123,5 @@
             }
         });
     }
+
 </script>

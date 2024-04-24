@@ -226,3 +226,43 @@ async function iniciarSesion() {
     });
   }
 }
+async function SavePresupuesto(idCiudad) {
+  var PresuCOP = $("#PresuCOP").val();
+  var ValorLocal = $("#ValorNuevo").html();
+  var PresupuestoNumerico = ValorLocal.replace(/,/g, "");
+  PresupuestoNumerico = parseFloat(PresupuestoNumerico);
+  var userse = $("#userse").val();
+  let formData = new FormData();
+  formData.append("funcion", "SavePresupuesto");
+  formData.append("idCiudad", idCiudad);
+  formData.append("PresuCOP", PresuCOP);
+  formData.append("ValorLocal", PresupuestoNumerico);
+  formData.append("userse", userse);
+
+  try {
+    let req2 = await fetch("controller/InicioController.php", {
+      method: "POST",
+      body: formData,
+    });
+    let res2 = await req2.json();
+    if (res2) {
+      if (res2.cod === 1) {
+        Swal.fire({
+          icon: "success",
+          text: "Presupuesto guardado, revisa tu perfil",
+        });
+        $("#respond").html("");
+      } else {
+        Swal.fire({
+          icon: "info",
+          text: "Error en Servidor",
+        });
+      }
+    }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      text: "Error en el sistema",
+    });
+  }
+}
