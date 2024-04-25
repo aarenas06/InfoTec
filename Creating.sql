@@ -88,15 +88,13 @@ CREATE TABLE IF NOT EXISTS `agencia`.`Ciudad` (
   `CiudadFoto` VARCHAR(100) NULL,
   `CiudDes` TEXT NULL,
   PRIMARY KEY (`idCiudad`),
-  INDEX `fk_Ciudad_Pais1_idx` (`Pais_idPais` ASC) VISIBLE,
+  INDEX `fk_Ciudad_Pais1_idx` (`Pais_idPais` ASC),
   CONSTRAINT `fk_Ciudad_Pais1`
     FOREIGN KEY (`Pais_idPais`)
     REFERENCES `agencia`.`Pais` (`idPais`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
+    ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `agencia`.`presupuesto`
 -- -----------------------------------------------------

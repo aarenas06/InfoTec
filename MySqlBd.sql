@@ -20,7 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `agencia`
 --
-
+CREATE DATABASE IF NOT EXISTS `agencia` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `agencia`;
 -- --------------------------------------------------------
 
 --
