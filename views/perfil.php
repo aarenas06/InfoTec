@@ -96,6 +96,10 @@ $InfoUser = $controlLand->InfoUser($_SESSION["idUsuarios"]);
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav ml-auto py-0">
+                        <p class="nav-item nav-link active">
+                        <div id="google_translate_element" style="margin-top: 30px;"></div>
+                        </p>
+                        <a href="/agencia/views/PantSeguimiento.php" class="nav-item nav-link active" style="margin-top: 2px;">Seguimiento Base datos</a>
                         <a href="http://localhost/agencia/" class="nav-item nav-link active" style="margin-top: 2px;">Inicio</a>
                         <?php if ($Sesion == 0) { ?>
                             <p style="cursor: pointer;" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#IniciarSession">Iniciar Sesión</p>
@@ -283,6 +287,18 @@ $InfoUser = $controlLand->InfoUser($_SESSION["idUsuarios"]);
             }
         }
     </script>
+    <!-- Google Translate -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'es', // Lenguaje de la página
+                includedLanguages: 'en,fr,de,ja,es,es', // Lenguajes a los que se puede traducir
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE, // Diseño de la pestaña
+                autoDisplay: false // Evita que se muestre automáticamente
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 
 </html>

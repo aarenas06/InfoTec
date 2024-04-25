@@ -18,7 +18,7 @@ if (!isset($_SESSION["idUsuarios"])) {
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -94,6 +94,9 @@ if (!isset($_SESSION["idUsuarios"])) {
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav ml-auto py-0">
+                        <p class="nav-item nav-link active">
+                        <div id="google_translate_element" style="margin-top: 30px;"></div>
+                        </p>
                         <a href="/agencia/views/PantSeguimiento.php" class="nav-item nav-link active" style="margin-top: 2px;">Seguimiento Base datos</a>
                         <a href="" class="nav-item nav-link active" style="margin-top: 2px;">Inicio</a>
                         <?php if ($Sesion == 0) { ?>
@@ -366,8 +369,9 @@ if (!isset($_SESSION["idUsuarios"])) {
     </div>
 
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
+    <div id="google_translate_element"></div>
     <input type="hidden" id="userse" value="<?= $userse ?>">
+
 
     <!-- JavaScript Librerias -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -386,6 +390,21 @@ if (!isset($_SESSION["idUsuarios"])) {
 
     <script src="./asset/js/main.js"></script>
     <script src="script.js"></script>
+
+    <!-- Google Translate -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'es', // Lenguaje de la página
+                includedLanguages: 'en,fr,de,ja,es,es', // Lenguajes a los que se puede traducir
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE, // Diseño de la pestaña
+                autoDisplay: false // Evita que se muestre automáticamente
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
 
 </body>
 

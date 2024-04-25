@@ -1,5 +1,5 @@
 <?php
-
+ini_set('display_errors', 0);
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Agencia/includes/conexion.php';
 
 class BD
@@ -13,6 +13,7 @@ class BD
 
     public function inserRegistro($Query)
     {
+        session_start();
         if (!isset($_SESSION["idUsuarios"])) {
             $UserSession = 3;
         } else {
