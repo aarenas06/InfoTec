@@ -14,7 +14,7 @@
     <div class="col-lg-4">
         <div class="container">
             <center>
-                <img class="img-fluid" style="max-height: 400px;" src="/Agencia/asset/img/Ciudad/Delhi.png" alt="">
+                <img class="img-fluid" style="max-height: 400px;" src="/Agencia/asset/img/Ciudad/<?= $data['CiudadFoto'] ?>" alt="">
             </center>
         </div>
     </div>

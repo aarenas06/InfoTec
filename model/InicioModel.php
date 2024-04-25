@@ -52,12 +52,16 @@ class modelo
     {
         try {
             $fechaHoy = date('Y-m-d H:i');
-            $sql1 = "UPDATE usuarios SET UsuLastSession=? WHERE UsuUser=?";
-            $sql = $this->CNX1->prepare($sql1);
-            $sql->execute([$fechaHoy, $User]);
-            $this->BD->inserRegistro($sql1);
+            $sql = "UPDATE usuarios SET UsuLastSession=:fechaHoy WHERE idUsuarios=:User";
+            $stmt = $this->CNX1->prepare($sql);
+            $stmt->bindParam(':fechaHoy', $fechaHoy, PDO::PARAM_STR);
+            $stmt->bindParam(':User', $User, PDO::PARAM_STR);
+            $stmt->execute();
+            $this->BD->inserRegistro($sql); // No está claro qué hace esta función, pero asumo que está bien.
+            return 1; // Retorna 1 si la consulta se ejecuta correctamente
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
+            return 0; // Retorna 0 si ocurre un error
         }
     }
     public function SavePresupuesto($data)

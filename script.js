@@ -4,6 +4,7 @@ async function SelectCiu() {
   var Pais = $("#Pais").val();
   if (Pais === "") {
     selectCiudad.innerHTML = "";
+    return;
   }
   let formData = new FormData();
   formData.append("funcion", "SelectCiu");
@@ -118,6 +119,7 @@ async function InfoDetalle(idCiudad) {
     });
   }
 }
+
 async function NewRegistro() {
   var Nombres = $("#Nombres").val();
   var Apellidos = $("#Apellidos").val();
@@ -229,7 +231,7 @@ async function iniciarSesion() {
 async function SavePresupuesto(idCiudad) {
   var PresuCOP = $("#PresuCOP").val();
   var ValorLocal = $("#ValorNuevo").html();
-  var PresupuestoNumerico = ValorLocal.replace(/,/g, "");
+  var PresupuestoNumerico = ValorLocal.replace(/\./g, "");
   PresupuestoNumerico = parseFloat(PresupuestoNumerico);
   var userse = $("#userse").val();
   let formData = new FormData();

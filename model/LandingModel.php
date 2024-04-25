@@ -38,7 +38,7 @@ GROUP BY tb1.idPais,tb1.PaisNombre ,tb1.PaisFoto";
     }
     public function GetInfoCiudad($idCiudad)
     {
-        $sql1 = "SELECT idCiudad,CiuNombre,CiuFoto,CiudDes FROM `ciudad` where  idCiudad =$idCiudad";
+        $sql1 = "SELECT idCiudad,CiuNombre,CiudadFoto,CiudDes FROM `ciudad` where  idCiudad =$idCiudad";
         $sql = $this->CNX1->prepare($sql1);
         $sql->execute();
         $row = $sql->fetch(PDO::FETCH_NAMED);
@@ -48,7 +48,7 @@ GROUP BY tb1.idPais,tb1.PaisNombre ,tb1.PaisFoto";
     }
     public function InfoDetalle($idCiudad)
     {
-        $sql1 = "SELECT tb1.idCiudad,tb1.CiuNombre,tb1.CiuCoord,tb1.CiuFoto,tb2.* 
+        $sql1 = "SELECT tb1.idCiudad,tb1.CiuNombre,tb1.CiuCoord,tb1.CiudadFoto,tb2.* 
         FROM ciudad tb1 
         INNER JOIN pais tb2 on tb2.idPais=tb1.Pais_idPais 
         WHERE idCiudad=$idCiudad";

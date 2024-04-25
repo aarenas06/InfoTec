@@ -14,7 +14,7 @@ class BD
     public function inserRegistro($Query)
     {
         if (!isset($_SESSION["idUsuarios"])) {
-            $UserSession = 0;
+            $UserSession = 3;
         } else {
             $UserSession = $_SESSION["idUsuarios"];
         }
@@ -24,13 +24,19 @@ class BD
         $sql->execute();
         $row = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-        if (count($row) == 5) {
-            ///validar cantidad
-            $sql2 = "DELETE FROM seguimiento_bd WHERE idSeguimiento_Bd = :num";
-            $sqlDelete = $this->CNX1->prepare($sql2);
-            $sqlDelete->bindValue(':num', $row[0]['num'], PDO::PARAM_INT);
-            $sqlDelete->execute();
+        if (count($row) >= 5) {
+            // Obtener el número mínimo de idSeguimiento_Bd para mantener solo los últimos 5 registros
+            $sqlMinId = "SELECT MAX(idSeguimiento_Bd) - 3 AS min_id FROM seguimiento_bd";
+            $stmtMinId = $this->CNX1->query($sqlMinId);
+            $minId = $stmtMinId->fetchColumn();
+
+            // Eliminar los registros que tengan un idSeguimiento_Bd menor que el mínimo calculado
+            $sqlDelete = "DELETE FROM seguimiento_bd WHERE idSeguimiento_Bd < :minId";
+            $stmtDelete = $this->CNX1->prepare($sqlDelete);
+            $stmtDelete->bindValue(':minId', $minId, PDO::PARAM_INT);
+            $stmtDelete->execute();
         }
+
 
         $fechaHoy = date('Y-m-d H:i');
         if (is_string($Query)) {
@@ -42,5 +48,13 @@ class BD
             $stmt->bindParam(':fechaHoy', $fechaHoy);
             $stmt->execute();
         }
+    }
+    public function TbSeg()
+    {
+        $sql1 = "SELECT tb1.idSeguimiento_Bd,tb1.SegSentencia,tb1.SegFechaEje ,tb2.UsuUser FROM seguimiento_bd tb1 LEFT join usuarios tb2 on tb2.idUsuarios=tb1.Usuarios_idUsuarios;        ";
+        $sql = $this->CNX1->prepare($sql1);
+        $sql->execute();
+        $row = $sql->fetchAll(PDO::FETCH_ASSOC);
+        return $row;
     }
 }

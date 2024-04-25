@@ -86,7 +86,7 @@ if (!isset($_SESSION["idUsuarios"])) {
     <div class="container-fluid position-relative nav-bar p-0">
         <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
             <nav class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5">
-                <a href="" class="navbar-brand">
+                <a class="navbar-brand">
                     <h1 class="m-0 text-primary"><span class="text-dark">INFO</span>DEC</h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -94,6 +94,7 @@ if (!isset($_SESSION["idUsuarios"])) {
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav ml-auto py-0">
+                        <a href="/agencia/views/PantSeguimiento.php" class="nav-item nav-link active" style="margin-top: 2px;">Seguimiento Base datos</a>
                         <a href="" class="nav-item nav-link active" style="margin-top: 2px;">Inicio</a>
                         <?php if ($Sesion == 0) { ?>
                             <p style="cursor: pointer;" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#IniciarSession">Iniciar Sesión</p>
@@ -103,8 +104,8 @@ if (!isset($_SESSION["idUsuarios"])) {
                                     <i class="fa-solid fa-user"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Perfil</a></li>
-                                    <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                                    <li><a class="dropdown-item" href="/agencia/views/perfil.php">Perfil</a></li>
+                                    <li><a class="dropdown-item" href="/Agencia/logout.php">Cerrar Sesión</a></li>
                                 </ul>
                             </div>
                         <?php  } ?>
@@ -317,7 +318,7 @@ if (!isset($_SESSION["idUsuarios"])) {
                                         <option selected>Sexo</option>
                                         <option value="M">Masculino</option>
                                         <option value="F">Femenino </option>
-                                        <option value="I">Prefiero no Indicar</option>
+                                        <!-- <option value="I">Prefiero no Indicar</option> -->
                                     </select>
                                 </div>
                                 <div class="form-group">

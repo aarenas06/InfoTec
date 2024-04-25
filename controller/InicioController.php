@@ -54,6 +54,7 @@ class InicioController
             $_SESSION['UsuUser'] = $validateUser['UsuUser'];
 
             $LastSession = $this->MODEL->LastSession($validateUser['idUsuarios']);
+
             $responde = array(
                 "cod" => 1,
                 "Mensaje" => 'Creedenciales Validas',
@@ -71,12 +72,13 @@ class InicioController
     {
         $EUR = $this->consumo();
         $valorReal = $EUR * $_POST['PresuCOP'];
+        $conversion = str_replace(',', '', $valorReal);
         $data = array(
             "Ciudad_idCiudad" => $_POST['idCiudad'],
             "PreValorLocal" => $_POST['PresuCOP'],
             "PreValorPaisSelect" => $_POST['ValorLocal'],
             "Usuarios_idUsuarios" => $_POST['userse'],
-            "PreValorAlem" => number_format($valorReal, 2),
+            "PreValorAlem" => $conversion,
             "PreEstado" => 0,
         );
         $insert = $this->MODEL->SavePresupuesto($data);

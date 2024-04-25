@@ -6,18 +6,14 @@ session_start();
 if (!isset($_SESSION["idUsuarios"])) {
     // Si el usuario no ha iniciado sesión, redirige al índice y muestra un mensaje con SweetAlert
     echo "<script>";
-    echo 'alert("Usted no deberia estar aqui");window.location.href="http://localhost/Agencia/";';
+    echo 'alert("Usted No ha Iniciado Sessión");window.location.href="http://localhost/Agencia/";';
     echo "</script>";
     exit; // Termina la ejecución del script después de redirigir al usuario
 } else {
     $Sesion = 1;
     $userse = $_SESSION["idUsuarios"];
 }
-require_once '../controller/PerfilController.php';
 
-$controlLand = new PerfilController();
-
-$InfoUser = $controlLand->InfoUser($_SESSION["idUsuarios"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,7 +92,8 @@ $InfoUser = $controlLand->InfoUser($_SESSION["idUsuarios"]);
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="http://localhost/agencia/" class="nav-item nav-link active" style="margin-top: 2px;">Inicio</a>
+                        <a href="/agencia/views/PantSeguimiento.php" class="nav-item nav-link active" style="margin-top: 2px;">Seguimiento Base datos</a>
+                        <a href="/agencia/" class="nav-item nav-link active" style="margin-top: 2px;">Inicio</a>
                         <?php if ($Sesion == 0) { ?>
                             <p style="cursor: pointer;" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#IniciarSession">Iniciar Sesión</p>
                         <?php } else { ?>
@@ -105,7 +102,7 @@ $InfoUser = $controlLand->InfoUser($_SESSION["idUsuarios"]);
                                     <i class="fa-solid fa-user"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                    <li><a class="dropdown-item" href="/agencia/views/perfil.php">Perfil</a></li>
                                     <li><a class="dropdown-item" href="/Agencia/logout.php">Cerrar Sesión</a></li>
                                 </ul>
                             </div>
@@ -116,43 +113,8 @@ $InfoUser = $controlLand->InfoUser($_SESSION["idUsuarios"]);
         </div>
     </div>
     <div class="contenido" style="margin:3vh;">
-        <div class="row">
-            <div class="col-lg-4">
-                <center>
-                    <h5>
-                        <?= $InfoUser['UsuNombres'] . ' ' . $InfoUser['UsuApellidos'] ?> <br>
-                        <?= $InfoUser['Rol'] ?>
-                    </h5>
-
-                    <?php if ($InfoUser['UsuSexo'] == 'M') { ?>
-                        <img class="img-fluid" height="320px" width="320px" style="border-radius: 200px;" src="/Agencia/asset/img/profile/profile-M.avif" alt="">
-                    <?php  } else  if ($InfoUser['UsuSexo'] == 'F') { ?>
-                        <img class="img-fluid" height="320px" width="320px" style="border-radius: 200px;" src="/Agencia/asset/img/profile/profile-F.avif" alt="">
-                    <?php  } else { ?>
-                        <img class="img-fluid" height="320px" width="320px" style="border-radius: 200px;" src="/Agencia/asset/img/profile/profile-F.avif" alt="">
-                    <?php } ?>
-
-                    <b>
-                        <p style="color: green; margin-top:10px;"> ° Activo</p>
-                    </b>
-                </center>
-            </div>
-            <div class="col-lg-8">
-                <div class="card" style="border-radius:25px;min-height:370px;  margin: top 10px;">
-                    <div class="card-body">
-                        <center>
-                            <h5>Tus Presupuestos Guardados</h5>
-                        </center>
-                        <div class="tbpropios" id="tbpropios"></div>
-                        <hr>
-                        <center>
-                            <h5>Presupuestos Compartidos</h5>
-                        </center>
-                        <div class="tbComp" id="tbComp"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <h1>Gestiona El rendimiento de tu base de datos</h1>
+        <div class="TbSeg" id="TbSeg"></div>
     </div>
     <div class="container-fluid bg-dark text-white-50 py-10 px-sm-3 px-lg-5" style="margin-top: 90px; height:400px">
         <div class="row pt-5">
@@ -175,7 +137,6 @@ $InfoUser = $controlLand->InfoUser($_SESSION["idUsuarios"]);
             </div>
         </div>
     </div>
-    <input type="text" value="<?= $InfoUser['idUsuarios'] ?>" id="idUsuarios">
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
@@ -196,84 +157,23 @@ $InfoUser = $controlLand->InfoUser($_SESSION["idUsuarios"]);
     <script src="../asset/mail/jqBootstrapValidation.min.js"></script>
     <script src="../asset/mail/contact.js"></script>
     <script src="../asset/js/main.js"></script>
+
     <script>
-        tbpropios();
-        async function tbpropios() {
-            var idUsuarios = $("#idUsuarios").val();
+        TbSeg();
+        setInterval(TbSeg, 10000);
 
+        async function TbSeg() {
             let formData = new FormData();
-            formData.append("funcion", "tbpropios");
-            formData.append("idUsuarios", idUsuarios);
+            formData.append("funcion", "TbSeg");
             try {
-                let req2 = await fetch("/Agencia/controller/PerfilController.php", {
+                let req2 = await fetch("/Agencia/controller/RegBdController.php", {
                     method: "POST",
                     body: formData,
                 });
                 let res2 = await req2.text();
                 if (res2) {
-                    $("#tbpropios").html(res2);
+                    $("#TbSeg").html(res2);
                     $('#tb1').DataTable();
-
-                }
-            } catch (error) {
-                Swal.fire({
-                    icon: "error",
-                    text: "Error en el sistema",
-                });
-            }
-        }
-        tbComp();
-        async function tbComp() {
-            var idUsuarios = $("#idUsuarios").val();
-
-            let formData = new FormData();
-            formData.append("funcion", "tbComp");
-            formData.append("idUsuarios", idUsuarios);
-            try {
-                let req2 = await fetch("/Agencia/controller/PerfilController.php", {
-                    method: "POST",
-                    body: formData,
-                });
-                let res2 = await req2.text();
-                if (res2) {
-                    $("#tbComp").html(res2);
-                    $('#tb2').DataTable();
-                }
-            } catch (error) {
-                Swal.fire({
-                    icon: "error",
-                    text: "Error en el sistema",
-                });
-            }
-        }
-        async function CompartirPre(idPresupuesto, idUser) {
-            var CompUser = $("#CompUser" + idPresupuesto).val();
-            let formData = new FormData();
-            formData.append("funcion", "CompartirPre");
-            formData.append("idPresupuesto", idPresupuesto);
-            formData.append("idUser", idUser);
-            formData.append("CompUser", CompUser);
-
-            try {
-                let req2 = await fetch("/Agencia/controller/PerfilController.php", {
-                    method: "POST",
-                    body: formData,
-                });
-                let res2 = await req2.json();
-                if (res2) {
-                    if (res2.cod === 1) {
-                        $("#comp-" + idPresupuesto).modal("hide"); // Abre el modal antes de cargar los datos
-                        Swal.fire({
-                            icon: "success",
-                            text: "Se Compartio El presupuesto",
-                        });
-                        tbpropios();
-                    } else {
-                        Swal.fire({
-                            icon: "info",
-                            text: "Error en Servidor",
-                        });
-                    }
                 }
             } catch (error) {
                 Swal.fire({

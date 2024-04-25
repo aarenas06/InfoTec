@@ -94,7 +94,7 @@
                 var temp = data.temp_c;
                 var des = data.wx_desc;
 
-                $("#Temp").html(temp + "°C");
+                $("#Temp").html(temp + "°C Aprox");
                 $("#DescTem").html(des);
             },
             error: function(xhr, status, error) {
@@ -115,7 +115,7 @@
                 var Valor = data.conversion_rates[COD]; // Acceder a la propiedad usando la variable COD como clave
                 $("#MonEqu").html(Valor);
                 var Tasa = Valor * Presu;
-                var TasaConComa = Tasa.toLocaleString(); // Formatear Tasa con comas de los miles
+                var TasaConComa = Tasa.toLocaleString('es-ES'); // Formatear Tasa con comas de los miles (español, España)
                 $("#ValorNuevo").html(TasaConComa);
             },
             error: function(xhr, status, error) {
@@ -123,5 +123,4 @@
             }
         });
     }
-
 </script>
