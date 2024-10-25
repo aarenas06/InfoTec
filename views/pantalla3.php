@@ -22,7 +22,6 @@
             <div class="card-body">
                 <center>
                     <h4>Clima</h4>
-
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="150" height="150" viewBox="0 0 48 48">
                         <linearGradient id="PtY0UrX1qJDQb5CcMCRpOa_qA3w9Yp2vY7r_gr1" x1="6.221" x2="37.408" y1="5.221" y2="36.408" gradientUnits="userSpaceOnUse">
                             <stop offset="0" stop-color="#fed100"></stop>
@@ -61,7 +60,6 @@
                     <br>
                     <h5>Moneda Local: <span id="MonLocal"><?= $data['PaisCodMon'] ?></span></h5>
                     <input type="hidden" id="PresuCOP" value="<?= $presupuesto ?>">
-
                     <h5>
                         1 COP = <span id="MonEqu"></span> <?= $data['PaisCodMon'] ?> <br>
                         $ <?= number_format($presupuesto, 00) ?> COP = <?= $data['PaisSimMon'] ?> <span id="ValorNuevo"></span> <?= $data['PaisCodMon'] ?>
@@ -93,7 +91,6 @@
             success: function(data) {
                 var temp = data.temp_c;
                 var des = data.wx_desc;
-
                 $("#Temp").html(temp + "°C Aprox");
                 $("#DescTem").html(des);
             },

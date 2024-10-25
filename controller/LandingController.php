@@ -48,6 +48,7 @@ class LandingController
         }
     }
 }
+
 // Crear instancia del controlnor
 $controller = new LandingController();
 

@@ -1,11 +1,17 @@
 <?php
 // Verifica si las variables de sesión no existen
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
-require_once './controller/LandingController.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Agencia/controller/LandingController.php';
 
 $controlLand = new LandingController();
 
 $listPais = $controlLand->ListPais();
+
 if (!isset($_SESSION["idUsuarios"])) {
     $Sesion = 0;
     $userse = '';

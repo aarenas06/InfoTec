@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 date_default_timezone_set('America/Bogota');
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Agencia/includes/conexion.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Agencia/model/RegBdModel.php';
